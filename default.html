@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+
+<title>
+Gradebook
+</title>
+
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="text/javascript">
+
+function CharCode(str, ch) {
+
+	var space = " ";
+	var chars = ",-.";
+	var digit = "0123456789";
+	var lower = "abcdefghijklmnopqrstuvwxyz";
+	var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	code = space.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 32;
+
+	code = chars.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 44;
+
+	code = digit.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 48;
+
+	code = lower.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 97;
+
+	code = upper.indexOf(str.substr(ch, 1));
+	if (code != -1) return code + 65;
+
+	return -1;
+
+	}
+
+function ShowGrades() {
+
+	var ch = 0, len = 0, pos = 0, code = 0, total1 = 0, total2 = 0;
+
+	id  = document.authorization.password.value;
+	len = id.length;
+
+	if (len <= 2) id = id + id;
+	if (len <= 4) id = id + id;
+	if (len <= 6) id = id + id;
+
+	pos = 15;
+	len = id.length;
+
+	for (ch = 0; ch <= len - 1; ch++) {
+
+		code = CharCode(id, ch);
+
+		if ((code == 32               ) ||
+			(code >= 44 && code <=  46) ||
+			(code >= 48 && code <=  57) ||
+		    (code >= 65 && code <=  90) ||
+		    (code >= 97 && code <= 122)) {
+
+			pos    += 1;
+			total1 += pos * (code - 31);
+
+			}
+
+		}
+
+	name = document.authorization.username.value;
+	len  = name.length;
+	pos  = 31;
+
+	for (ch = 0; ch <= len - 1; ch++) {
+
+		code = CharCode(name, ch);
+
+		if ((code == 32               ) ||
+			(code >= 44 && code <=  46) ||
+			(code >= 65 && code <=  90) ||
+		    (code >= 97 && code <= 122)) {
+
+			pos    += 1;
+			total2 += pos * (code - 31);
+
+			}
+
+		}
+
+	url = total1 * total2 + ".html";
+	window.location = url;
+
+	return false;
+
+	}
+
+</script>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1 align=center>Gradebook</h1>
+
+<center>
+
+<form action="" name=authorization onsubmit="return ShowGrades()">
+
+	<table border=0>
+
+	<tr><td height=30></td></tr>
+
+	<tr><td colspan=2 width=420>
+	Please enter your name and ID code exactly as they appear in your
+	teacher's gradebook, including upper and lower case, then click the 
+   <b>Show Grades</b> button.
+	</td></tr>
+
+	<tr><td height=30></td></tr>
+
+	<tr><td width=120>
+	Student Name
+	</td>
+
+	<td width=300>
+	<input type=text name=username size=40 maxlength=30>
+	</td></tr>
+
+	<tr><td width=120>
+	Student ID Code
+	</td>
+
+	<td width=300>
+	<input type=password name=password size=40 maxlength=15>
+	</td></tr>
+
+	<tr><td height=30></td></tr>
+
+	<tr><td colspan=2 width=420 align=center>
+	<input type=submit name=grades value="Show Grades">
+	</td></tr>
+
+	<tr><td height=30></td></tr>
+
+	<tr><td colspan=2 width=420>
+	If you get an error saying that the file cannot be found,
+	you probably entered your name or ID code incorrectly.
+	</td></tr>
+
+	<tr><td colspan=2 height=42 width=420></td></tr>
+
+	<tr><td colspan=2 width=420 align=center>
+	This web site was created with 
+	<a href="http://www.gradekeeper.com">Gradekeeper</a>
+	</td></tr>
+
+	</table>
+
+	</form>
+	</center>
+
+</body>
+</html>
